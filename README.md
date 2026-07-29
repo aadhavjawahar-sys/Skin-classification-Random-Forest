@@ -25,12 +25,15 @@ It has nearly 250,000 datapoints that I split in a 80/20 split for my training a
 For formatting the provided text file, I wrote a bit of code to make it similar to a .csv file.
 
 **Original**
+
 ![Image 1](https://github.com/aadhavjawahar-sys/Skin-classification-Random-Forest/blob/main/images/RF_2.png) 
 
 *Code*
+
 ![Image 2](https://github.com/aadhavjawahar-sys/Skin-classification-Random-Forest/blob/main/images/DF_3.png) 
 
 **Datafile**
+
 ![Image 3](https://github.com/aadhavjawahar-sys/Skin-classification-Random-Forest/blob/main/images/DF_4.png)
 
 ***
