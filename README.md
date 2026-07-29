@@ -38,6 +38,19 @@ For formatting the provided text file, I wrote a bit of code to make it similar 
 
 ***
 
-## Model Accuracy
+## Hyper-parameter Tuning
+
+When creating my Random Forest model, I manipulated 3-main hyper-parameters.
+- max_depth: Number of questions the model asks before reaching a conclusion
+- max_features: Max number of features per Decision Tree model in the forest
+- n_estimators: Number of Decision Tree Models in the Random Forest
 
 ![Image 4](https://github.com/aadhavjawahar-sys/Skin-classification-Random-Forest/blob/main/images/DF_5.png)
+
+***
+## Model Accuracy
+
+The accuracy of the skin-identification model was near perfect on the first stage of testing, at about 0.99 for testing. To I adjusted the testing data from its original 75/25 to an 80/20 split to improve its accuracy. Now, it is nearly perfect in its identification.
+
+![Image 5](https://github.com/aadhavjawahar-sys/Skin-classification-Random-Forest/blob/main/images/DF_6.png)
+
