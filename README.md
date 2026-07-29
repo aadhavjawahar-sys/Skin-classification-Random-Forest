@@ -18,5 +18,13 @@ and the target variable is whether or not it matches the color of skin
 - y: 1 (Skin), 2 (non-Skin)
 > Reverted to 0 (Skin) and 1 (non-Skin) to match binary
 
+It has nearly 250,000 datapoints that I split in a 80/20 split for my training and testing datasets respectively.
+
+### Format
+
+For formatting the provided text file, I wrote a bit of code to make it similar to a .csv file.
+
+**Original**                                                             *Code*                                                   **Formatted**
+![Original]()                                                           ![Original]()                                               ![Original]()
 
 ***
