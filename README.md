@@ -37,3 +37,7 @@ For formatting the provided text file, I wrote a bit of code to make it similar 
 ![Image 3](https://github.com/aadhavjawahar-sys/Skin-classification-Random-Forest/blob/main/images/DF_4.png)
 
 ***
+
+## Model Accuracy
+
+![Image 4](https://github.com/aadhavjawahar-sys/Skin-classification-Random-Forest/blob/main/images/DF_5.png)
