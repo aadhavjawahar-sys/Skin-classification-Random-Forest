@@ -54,3 +54,19 @@ The accuracy of the skin-identification model was near perfect on the first stag
 
 ![Image 5](https://github.com/aadhavjawahar-sys/Skin-classification-Random-Forest/blob/main/images/DF_6.png)
 
+## How to interact with the model
+
+To interact with my Random Forest classification model, I made a simple UI with the help of the [gradio](https://gradio.app/) module.
+
+1. Select appropriate RGB colors in the 3 selectors.
+2. Click Submit
+![Image of the RGB selector](https://github.com/aadhavjawahar-sys/Skin-classification-Random-Forest/blob/main/images/DF_7.png)  
+3. Look at the output box to determine whether it can be classified as a skin color.
+![Skin or not skin? That is the question.](https://github.com/aadhavjawahar-sys/Skin-classification-Random-Forest/blob/main/images/DF_8.png)
+
+## Future direction
+
+As a whole, I have no future aspirations or additions to this project as it has a relatively perfect accuracy for the training and testing data, making it a wonderful way to classify skin color. Though, I am open to suggestions from others about how I can improve this project. Thanks for your time!
+
+
+
