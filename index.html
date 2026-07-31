@@ -1,9 +1,201 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My Website t</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RGB Skin Detector</title>
+  <style>
+    :root {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --text-color: #f8fafc;
+      --accent-color: #38bdf8;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background-color: var(--card-bg);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      width: 100%;
+      max-width: 420px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .preview-box {
+      width: 100%;
+      height: 80px;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      border: 2px solid #334155;
+      transition: background-color 0.2s ease;
+    }
+
+    .input-group {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-size: 0.9rem;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 0.6rem;
+      border-radius: 6px;
+      border: 1px solid #475569;
+      background: #0f172a;
+      color: #fff;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.8rem;
+      border: none;
+      border-radius: 6px;
+      background-color: var(--accent-color);
+      color: #0f172a;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    #result {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      border-radius: 6px;
+      text-align: center;
+      font-weight: bold;
+      display: none;
+    }
+
+    .status-skin {
+      background-color: #15803d;
+      color: #f0fdf4;
+    }
+
+    .status-nonskin {
+      background-color: #b91c1c;
+      color: #fef2f2;
+    }
+  </style>
+
+  <script type="module">
+    import { Client } from "https://cdn.jsdelivr.net/npm/@gradio/client/dist/index.min.js";
+    window.GradioClient = Client;
+  </script>
 </head>
 <body>
-    <h1>Hello, world! Welcome to my GitHub website.</h1>
+
+  <div class="container">
+    <h2>Skin Color Classifier</h2>
+    
+    <div id="preview" class="preview-box" style="background-color: rgb(255, 255, 255);"></div>
+
+    <form id="predictor-form">
+      <div class="input-group">
+        <label for="red">Red (0 - 255)</label>
+        <input type="number" id="red" min="0" max="255" value="255" required>
+      </div>
+
+      <div class="input-group">
+        <label for="green">Green (0 - 255)</label>
+        <input type="number" id="green" min="0" max="255" value="255" required>
+      </div>
+
+      <div class="input-group">
+        <label for="blue">Blue (0 - 255)</label>
+        <input type="number" id="blue" min="0" max="255" value="255" required>
+      </div>
+
+      <button type="submit" id="submit-btn">Predict Class</button>
+    </form>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    // Replace this URL with your active Gradio temporary link or Hugging Face Space URL
+    const GRADIO_URL = "https://36248bce408ca11248.gradio.live"; 
+
+    const redInput = document.getElementById('red');
+    const greenInput = document.getElementById('green');
+    const blueInput = document.getElementById('blue');
+    const preview = document.getElementById('preview');
+    const form = document.getElementById('predictor-form');
+    const resultDiv = document.getElementById('result');
+    const submitBtn = document.getElementById('submit-btn');
+
+    // Update dynamic color preview
+    function updatePreview() {
+      const r = redInput.value || 0;
+      const g = greenInput.value || 0;
+      const b = blueInput.value || 0;
+      preview.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+    }
+
+    [redInput, greenInput, blueInput].forEach(input => {
+      input.addEventListener('input', updatePreview);
+    });
+
+    // Make prediction request via Gradio API
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const b = parseFloat(blueInput.value);
+      const g = parseFloat(greenInput.value);
+      const r = parseFloat(redInput.value);
+
+      submitBtn.innerText = "Predicting...";
+      submitBtn.disabled = true;
+
+      try {
+        const app = await window.GradioClient.connect(GRADIO_URL);
+        
+        // Pass parameters matching the order defined in Gradio interface: [B, G, R]
+        const result = await app.predict("/predict", [b, g, r]);
+
+        const prediction = result.data[0];
+        
+        resultDiv.style.display = 'block';
+        resultDiv.innerText = `Result: ${prediction}`;
+        
+        if (prediction === "Skin") {
+          resultDiv.className = "status-skin";
+        } else {
+          resultDiv.className = "status-nonskin";
+        }
+      } catch (error) {
+        console.error(error);
+        alert("Failed to reach the Colab Gradio endpoint. Ensure Colab cell is running and the URL is updated.");
+      } finally {
+        submitBtn.innerText = "Predict Class";
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
 </body>
 </html>
